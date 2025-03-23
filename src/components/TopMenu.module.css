@@ -54,3 +54,13 @@
     font-size: 21px;
     font-weight: 500;
 }
+
+.authLogout {
+    display: flex;
+    margin-right: 30px;
+}
+
+.authLogout a {
+    font-size: 21px;
+    font-weight: 500;
+}

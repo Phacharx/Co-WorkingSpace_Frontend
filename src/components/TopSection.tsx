@@ -6,7 +6,7 @@ const TopSection = () => {
   return (
     <div className={styles.container}>
       <div className={styles.welcomeSection}>
-        <Image 
+        <Image
           src="/Image/Home.png"
           alt="Welcome to Space"
           width={1200}

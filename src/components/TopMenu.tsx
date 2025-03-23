@@ -1,8 +1,14 @@
 import React from 'react';
 import Image from 'next/image';
+import { getServerSession } from "next-auth";
+import { authOptions } from "../app/api/auth/[...nextauth]/authOptions";
 import styles from './TopMenu.module.css';
 
-const TopMenu = () => {
+export default async function TopMenu() {
+
+  const session = await getServerSession(authOptions)
+  console.log(session)
+
   return (
     <header className={styles.topMenu}>
       <div className={styles.logo}>
@@ -21,13 +27,19 @@ const TopMenu = () => {
           <li><a href="#review">Review</a></li>
         </ul>
       </nav>
-      <div className={styles.authLogin}>
-        <a href="#login">Login</a>
-        <a>|</a>
-        <a href="#register">Register</a>
-      </div>
+        {
+          session ? (
+            <div className={styles.authLogout}>
+              <a href="/logout">Logout</a>
+            </div>
+          ) : (
+            <div className={styles.authLogin}>
+              <a href="/login">Login</a>
+              <a>|</a>
+              <a href="/register">Register</a>
+            </div>
+          )
+        }
     </header>
   );
 }
-
-export default TopMenu;

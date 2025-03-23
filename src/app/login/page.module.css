@@ -1,0 +1,86 @@
+.main {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    padding: 6rem;
+    padding-top: 120px;
+    min-height: 100vh;
+    background-color: #FFFFFF;
+}
+
+.login-container {
+    width: 500px;
+    max-width: 400px;
+    padding: 2rem;
+    border-radius: 8px;
+    margin-top: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.heading {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.label {
+    font-size: 14px;
+    color: #333;
+}
+
+.input {
+    width: 500px;
+    height: 50px;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #212121;
+    border-radius: 10px;
+}
+
+.button {
+    margin-top: 10px;
+    width: 500px;
+    height: 50px;
+    padding: 10px;
+    border: 2px solid #212121;
+    color: #212121;
+    background-color: white;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.error {
+    color: red;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.rightSide {
+    width: 417px;
+    text-align: center;
+}
+
+.separator {
+    height: 700px;
+    border: 1px solid #AAAAAA;
+    margin: 20px 0px;
+}
+
+.buttonRegister {
+    margin-top: 30px;
+    width: 100px;
+    padding: 10px;
+    background-color: #212121;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
