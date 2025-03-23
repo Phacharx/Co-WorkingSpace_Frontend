@@ -1,0 +1,56 @@
+.topMenu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #EAE4DD;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logoImage {
+    width: 175px;
+    height: auto;
+}
+
+.navLinks {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.navLinks li {
+    margin: 0 15px;
+}
+
+.navLinks li a {
+    text-decoration: none;
+    font-size: 21px;
+    font-weight: 500;
+    color: #212121;
+    transition: color 0.3s ease;
+}
+
+.navLinks li a:hover {
+    color: #295F98;
+}
+
+.authLogin {
+    display: flex;
+    gap: 10px;
+}
+
+.authLogin a {
+    font-size: 21px;
+    font-weight: 500;
+}

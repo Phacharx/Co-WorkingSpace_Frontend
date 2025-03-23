@@ -1,0 +1,89 @@
+/* TopSection.module.css */
+.container {
+    margin-top: 20px;
+    /* ให้ช่องว่างกับ Header */
+}
+
+/* รูปภาพต้อนรับ */
+.welcomeSection {
+    position: relative;
+}
+
+.welcomeImage {
+    /* width: 100%;
+    height: auto; */
+    object-fit: cover;
+    border-radius: 40px;
+}
+
+.welcomeText {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    text-align: center;
+    background-color: rgba(21, 21, 21, 0.6);
+    border-radius: 20px;
+    width: 1050px;
+    padding: 30px 1px;
+}
+
+.welcomeText h1 {
+    font-size: 40px;
+    font-weight: bold;
+}
+
+.featuresSection {
+    margin-top: 70px;
+}
+
+.feature {
+    position: relative;
+    height: 600px;
+    width: 1200px;
+    margin-bottom: 80px;
+}
+
+.featureImage {
+    object-fit: cover;
+    border-radius: 40px;
+}
+
+.featureText {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 550px;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 25px;
+    width: 550px;
+    z-index: 99;
+}
+
+.left {
+    top: 25px;
+    left: 25px;
+}
+
+.right {
+    top: 25px;
+    right: 25px;
+}
+
+.featureText h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.featureText ul {
+    list-style-type: none;
+    padding-left: 0;
+    margin-top: 0;
+}
+
+.featureText ul li {
+    margin: 5px 0;
+}
