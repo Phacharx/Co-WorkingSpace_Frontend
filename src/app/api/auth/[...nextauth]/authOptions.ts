@@ -16,9 +16,9 @@ export const authOptions: AuthOptions = {
                 const user = await userLogin(credentials.email, credentials.password);
 
                 if (user) {
-                    return user;  // ส่งข้อมูล user กลับ
+                    return user;
                 } else {
-                    return null;  // ถ้าไม่พบ user
+                    return null;
                 }
             }
         })
@@ -34,9 +34,8 @@ export const authOptions: AuthOptions = {
             return token;
         },
         async session({ session, token }) {
-            session.user = token;  // ส่ง token ใน session
+            session.user = token as any;
             return session;
         }
     }
-    // secret: process.env.NEXTAUTH_SECRET, // ใช้ secret ที่ตั้งใน .env.local
 };

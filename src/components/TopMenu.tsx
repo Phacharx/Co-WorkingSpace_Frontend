@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { use } from 'react';
 import Image from 'next/image';
 import { getServerSession } from "next-auth";
 import { authOptions } from "../app/api/auth/[...nextauth]/authOptions";
@@ -6,8 +6,8 @@ import styles from './TopMenu.module.css';
 
 export default async function TopMenu() {
 
-  const session = await getServerSession(authOptions)
-  console.log(session)
+  const session = await getServerSession(authOptions);
+  // console.log(session)
 
   return (
     <header className={styles.topMenu}>
@@ -30,7 +30,7 @@ export default async function TopMenu() {
         {
           session ? (
             <div className={styles.authLogout}>
-              <a href="/logout">Logout</a>
+              <a href="/logout">Logout of {session.user?.name}</a>
             </div>
           ) : (
             <div className={styles.authLogin}>
