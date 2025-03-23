@@ -88,8 +88,8 @@ const Register = () => {
           service history, and payment information seamlessly through 
           our system.
         </p>
-        <a href="/login">
-          <button className={styles.buttonLogin}>LOGIN</button>
+        <a href="/signin">
+          <button className={styles.buttonLogin}>SIGN IN</button>
         </a>
       </div>
     </div>

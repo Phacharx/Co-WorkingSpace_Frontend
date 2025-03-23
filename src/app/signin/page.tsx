@@ -30,7 +30,7 @@ const Login = () => {
   return (
     <div className={styles['main']}>
       <div className={styles['login-container']}>
-        <h2 className={styles['heading']}>Login</h2>
+        <h2 className={styles['heading']}>Sign In</h2>
         {error && <p className={styles.error}>{error}</p>}
         <form onSubmit={handleLogin}>
           <div className={styles['form-group']}>
@@ -55,7 +55,7 @@ const Login = () => {
             />
           </div>
 
-          <button className={styles.button} type="submit">Login</button>
+          <button className={styles.button} type="submit">Sign In</button>
         </form>
       </div>
       <hr className={styles.separator} />

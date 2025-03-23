@@ -12,34 +12,38 @@ export default async function TopMenu() {
   return (
     <header className={styles.topMenu}>
       <div className={styles.logo}>
-        <Image
+        <a href='/'>
+          <Image
           src="/Image/SPACE.png"
           alt="Space Logo"
-          width={120}
-          height={40}
+          width={75}
+          height={25}
           className={styles.logoImage}
         />
+        </a>
       </div>
-      <nav>
-        <ul className={styles.navLinks}>
-          <li><a href="#space">Space</a></li>
-          <li><a href="#my-reservation">My Reservation</a></li>
-          <li><a href="#review">Review</a></li>
-        </ul>
-      </nav>
+      <div className={styles.navAuth}>
+        <nav>
+          <ul className={styles.navLinks}>
+            <li><a href="space">Space</a></li>
+            <li><a href="my-reservation">My Reservation</a></li>
+            <li><a href="review">Review</a></li>
+          </ul>
+        </nav>
         {
           session ? (
-            <div className={styles.authLogout}>
-              <a href="/logout">Logout of {session.user?.name}</a>
+            <div className={styles.authLogin}>
+              <a href="/signout" className={styles.text}>Sign Out</a>
             </div>
           ) : (
             <div className={styles.authLogin}>
-              <a href="/login">Login</a>
+              <a href="/signin" className={styles.text}>Sign In</a>
               <a>|</a>
-              <a href="/register">Register</a>
+              <a href="/register" className={styles.text}>Register</a>
             </div>
           )
         }
+      </div>
     </header>
   );
 }

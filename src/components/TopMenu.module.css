@@ -18,8 +18,16 @@
 }
 
 .logoImage {
-    width: 175px;
+    width: 125px;
     height: auto;
+}
+
+.navAuth {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin: 0 50px;
 }
 
 .navLinks {
@@ -38,7 +46,7 @@
     font-size: 21px;
     font-weight: 500;
     color: #212121;
-    transition: color 0.3s ease;
+    transition: color 0.1s ease;
 }
 
 .navLinks li a:hover {
@@ -53,14 +61,9 @@
 .authLogin a {
     font-size: 21px;
     font-weight: 500;
+    transition: color 0.1s ease;
 }
 
-.authLogout {
-    display: flex;
-    margin-right: 30px;
-}
-
-.authLogout a {
-    font-size: 21px;
-    font-weight: 500;
+.text:hover {
+    color: #295F98;
 }
