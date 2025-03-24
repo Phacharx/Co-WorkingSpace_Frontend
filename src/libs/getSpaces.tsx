@@ -1,8 +1,22 @@
+import axios from 'axios';
+
 export default async function getSpaces() {
-    await new Promise((resolve) => setTimeout(resolve, 300));
-    const response = await fetch('http://localhost:5003/api/v1/spaces');
-    if(!response.ok) {
-        throw new Error('Failed to fetch spaces');
+  try {
+    const response = await axios.get('http://localhost:5003/api/v1/spaces', {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    // ตรวจสอบสถานะการตอบกลับจาก API
+    if (!response.data || !response.data.success) {
+      throw new Error('No data available');
     }
-    return await response.json();
+
+    return response.data;
+
+  } catch (error) {
+    console.error("Error fetching spaces:", error);
+    throw error;
+  }
 }

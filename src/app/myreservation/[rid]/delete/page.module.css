@@ -15,7 +15,7 @@
     width: 300px;
     height: 60px;
     font-size: 20px;
-    background-color: #3487e0;
+    background-color: #E31212;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -27,6 +27,7 @@
 .container {
     width: 500px;
     height: 250px;
+    padding: 20px;
     border-radius: 40px;
     background-color: white;
     display: flex;
@@ -44,4 +45,10 @@
     margin-top: 40px;
     font-size: 30px;
     font-weight: 600;
+}
+
+.error {
+    color: red;
+    font-size: 14px;
+    margin-top: 10px;
 }

@@ -2,11 +2,17 @@ import Image from "next/image";
 import getSpace from "@/libs/getSpace";
 import styles from './page.module.css';
 import { Space, Review } from "../../../../interface";
+import getReviews from "@/libs/getReviews";
 
 export default async function spaceDetailPage({params}:{params:{vid:string}}) {
-
     const workspace: Space = await getSpace(params.vid);
-    const reviews: Review[] = workspace.data.reviews || [];  // ให้แน่ใจว่าได้ array reviews มา
+    let reviews: Review[] = [];
+
+    try {
+        reviews = await getReviews(params.vid); // Fetch reviews safely
+    } catch (error) {
+        // console.error('Error fetching reviews:', error);
+    }
 
     return (
         <div className={styles.overlay}>

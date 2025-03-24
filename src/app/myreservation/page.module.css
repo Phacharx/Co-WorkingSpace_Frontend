@@ -1,0 +1,78 @@
+.main {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 6rem;
+    padding-top: 120px;
+    min-height: 100vh;
+    background-color: #FFFFFF;
+}
+
+.HeaderText {
+    margin-bottom: 50px;
+    color: #212121;
+}
+
+.reservation {
+    width: 1000px;
+    padding: 20px;
+    border-radius: 20px;
+    border: 1.5px solid #212121;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    margin: 10px;
+}
+
+.reservation h2 {
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.flexButton {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 20px;
+}
+
+.updateButton {
+    font-size: 20px;
+    background-color: #295F98;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+
+}
+
+.createButton {
+    font-size: 20px;
+    background-color: #295F98;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    position: absolute;
+    top: 100px;
+    right: 30px;
+}
+
+.deleteButton {
+    font-size: 20px;
+    background-color: #E31212;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.noText {
+    font-size: 18px;
+}

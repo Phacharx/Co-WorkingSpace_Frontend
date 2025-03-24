@@ -9,7 +9,6 @@ export interface Review {
   space: string;
   rating: number;
   comment: string;
-  createdAt: string;
   __v: number;
 }
 
@@ -28,4 +27,12 @@ export interface Space {
   __v: number;
   reviews: Review[];
   id: string;
+}
+
+export interface Reservation {
+  _id: string;
+  date: string;
+  user: User;
+  space: Space;
+  __v: number;
 }

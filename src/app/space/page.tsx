@@ -7,6 +7,7 @@ import Link from 'next/link';
 
 export default async function page() {
     const workspaces = await getSpaces();
+    console.log(workspaces.data);
 
   return (
     <div className={styles.container}>

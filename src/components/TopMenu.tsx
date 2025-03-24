@@ -7,7 +7,7 @@ import styles from './TopMenu.module.css';
 export default async function TopMenu() {
 
   const session = await getServerSession(authOptions);
-  // console.log(session)
+  // console.log(session?.user.token)
 
   return (
     <header className={styles.topMenu}>
@@ -25,9 +25,9 @@ export default async function TopMenu() {
       <div className={styles.navAuth}>
         <nav>
           <ul className={styles.navLinks}>
-            <li><a href="space">Space</a></li>
-            <li><a href="my-reservation">My Reservation</a></li>
-            <li><a href="review">Review</a></li>
+            <li><a href="/space">Space</a></li>
+            <li><a href="/myreservation">My Reservation</a></li>
+            <li><a href="/review">Review</a></li>
           </ul>
         </nav>
         {
