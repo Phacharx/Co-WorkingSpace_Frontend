@@ -17,13 +17,15 @@ export default async function reservation() {
                         <h2>Username: {reservation.user.name}</h2>
                         <h2>Co-Working Space: {reservation.space.name}</h2>
                         <h2>Booking Date: {new Date(reservation.date).toLocaleDateString()}</h2>
-                        <div className={styles.flexButton}>
-                            <a href={`/myreservation/${reservation._id}/update`}>
-                                <button className={styles.updateButton}>Update Now</button>
-                            </a>
-                            <a href={`/myreservation/${reservation._id}/delete`}>
-                                <button className={styles.deleteButton}>Remove Now</button>
-                            </a>
+                        <div className={styles.groupButton}>
+                            <div className={styles.flexButton}>
+                                <a href={`/myreservation/${reservation._id}/update`}>
+                                    <button className={styles.updateButton}>Update Now</button>
+                                </a>
+                                <a href={`/myreservation/${reservation._id}/delete`}>
+                                    <button className={styles.deleteButton}>Remove Now</button>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 ))
