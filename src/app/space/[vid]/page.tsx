@@ -90,9 +90,9 @@ export default function SpaceDetailPage({ params }: { params: { vid: string } })
               {/* <div className={styles.reviewHeaderLeft}>
                 <h3>{review.user.name}</h3>
               </div> */}
-              <hr className={styles.separator} />
+              {/* <hr className={styles.separator} /> */}
               <div className={styles.reviewContent}>
-                <p>Rating: {review.rating}</p>
+                <h3>Rating: {review.rating}</h3>
                 <p>{review.comment}</p>
               </div>
               {session && profile?.data?._id === review.user._id && (
