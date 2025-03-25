@@ -5,7 +5,7 @@ import { Reservation } from "../../../interface";
 export default async function reservation() {
     const reservations = await getReservations();
 
-    return (
+    return ( 
         <main className={styles.main}>
             <h1 className={styles.HeaderText}>Reservation</h1>
             <a href={`/myreservation/create`}><button className={styles.createButton}>Create Now</button></a>

@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import { signIn } from "next-auth/react";
 import { useState } from "react";
 import styles from './page.module.css';
@@ -23,7 +23,7 @@ const Login = () => {
     } else {
       // Redirect or handle successful login
       window.location.href = "/";
-      console.log("/////////////////////Login success");
+      console.log("Login success");
     }
   };
 

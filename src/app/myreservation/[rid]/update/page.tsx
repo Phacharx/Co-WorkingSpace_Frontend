@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import { useSession } from "next-auth/react";
 import getSpaces from "@/libs/getSpaces";
 import styles from "./page.module.css";
@@ -7,11 +7,12 @@ import { useEffect, useState } from "react";
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 
-export default function UpdateReservation({params}:{params:{rid:string}}) {
+export default function UpdateReservation({ params }: { params: { rid: string } }) {
   const { data: session } = useSession();
   const [workspaces, setWorkspaces] = useState<Space[]>([]);
   const [selectedWorkspace, setSelectedWorkspace] = useState<string>("");
   const [selectedDate, setSelectedDate] = useState<string>("");
+  const [error, setError] = useState<string | null>(null);  // For error handling
   const router = useRouter();
 
   useEffect(() => {
@@ -27,19 +28,19 @@ export default function UpdateReservation({params}:{params:{rid:string}}) {
 
   const handleUpdate = async () => {
     if (!session?.user?.token) {
-      console.error("No token found. Please log in again.");
+      setError("No token found. Please log in again.");
       return;
     }
 
     if (!selectedWorkspace || !selectedDate) {
-      console.error("Please select a workspace and a date.");
+      setError("Please select a workspace and a date.");
       return;
     }
 
     const reservationId = params.rid;
 
     if (!reservationId) {
-      console.error("Reservation ID is missing.");
+      setError("Reservation ID is missing.");
       return;
     }
 
@@ -61,8 +62,12 @@ export default function UpdateReservation({params}:{params:{rid:string}}) {
       }
 
       router.push('/myreservation');
-    } catch (error) {
-      console.error("Error updating reservation:", error);
+    } catch (error: any) {
+      if (error.response && error.response.data) {
+        setError(error.response.data.message || "Error updating reservation");
+      } else {
+        setError("Error updating reservation");
+      }
     }
   };
 
@@ -70,6 +75,8 @@ export default function UpdateReservation({params}:{params:{rid:string}}) {
     <div className={styles.container}>
       <div className={styles.card}>
         <h2 className={styles.title}>Update Reservation</h2>
+
+        {error && <p className={styles.error}>{error}</p>}
 
         <div className={styles.inputGroup}>
           <label htmlFor="workspace" className={styles.label}>

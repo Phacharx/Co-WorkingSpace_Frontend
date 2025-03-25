@@ -9,16 +9,17 @@ import axios from 'axios';
 export default function CreateReservation({ params }: { params: { vid: string } }) {
   const { data: session } = useSession();
   const [selectedDate, setSelectedDate] = useState<string>(""); 
+  const [error, setError] = useState<string | null>(null);  // Add state to handle errors
   const router = useRouter();
 
   const handleCreate = async () => {
     if (!session?.user?.token) {
-      console.error("No token found. Please log in again.");
+      setError("No token found. Please log in again.");
       return;
     }
 
     if (!selectedDate) {
-      console.error("Please select a date.");
+      setError("Please select a date.");
       return;
     }
 
@@ -40,8 +41,13 @@ export default function CreateReservation({ params }: { params: { vid: string } 
       }
 
       router.push('/myreservation');
-    } catch (error) {
-      console.error("Error creating reservation:", error);
+    } catch (error: any) {
+      // Capture error messages from the backend
+      if (error.response && error.response.data) {
+        setError(error.response.data.message || "Error creating reservation");
+      } else {
+        setError("Error creating reservation");
+      }
     }
   };
 
@@ -49,6 +55,8 @@ export default function CreateReservation({ params }: { params: { vid: string } 
     <div className={styles.container}>
       <div className={styles.card}>
         <h2 className={styles.title}>Create Reservation</h2>
+
+        {error && <p className={styles.error}>{error}</p>} {/* Display error message */}
 
         <div className={styles.inputGroup}>
           <label htmlFor="datePicker" className={styles.label}>

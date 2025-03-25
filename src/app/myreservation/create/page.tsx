@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import { useSession } from "next-auth/react";
 import getSpaces from "@/libs/getSpaces";
 import styles from "./page.module.css";
@@ -12,6 +12,7 @@ export default function CreateReservation() {
   const [workspaces, setWorkspaces] = useState<Space[]>([]);
   const [selectedWorkspace, setSelectedWorkspace] = useState<string>("");
   const [selectedDate, setSelectedDate] = useState<string>("");
+  const [error, setError] = useState<string | null>(null);  // New state for error handling
   const router = useRouter();
 
   useEffect(() => {
@@ -27,12 +28,12 @@ export default function CreateReservation() {
 
   const handleCreate = async () => {
     if (!session?.user?.token) {
-      console.error("No token found. Please log in again.");
+      setError("No token found. Please log in again.");
       return;
     }
 
     if (!selectedWorkspace || !selectedDate) {
-      console.error("Please select a workspace and a date.");
+      setError("Please select a workspace and a date.");
       return;
     }
 
@@ -54,7 +55,13 @@ export default function CreateReservation() {
       }
 
       router.push('/myreservation');
-    } catch (error) {
+    } catch (error: any) {
+      // Capture the error message from the backend
+      if (error.response && error.response.data) {
+        setError(error.response.data.message || "Error creating reservation");
+      } else {
+        setError("Error creating reservation");
+      }
       console.error("Error creating reservation:", error);
     }
   };
@@ -63,6 +70,8 @@ export default function CreateReservation() {
     <div className={styles.container}>
       <div className={styles.card}>
         <h2 className={styles.title}>Create Reservation</h2>
+
+        {error && <p className={styles.error}>{error}</p>}  {/* Show error message if available */}
 
         <div className={styles.inputGroup}>
           <label htmlFor="workspace" className={styles.label}>

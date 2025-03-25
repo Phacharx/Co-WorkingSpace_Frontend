@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import axios from 'axios';
@@ -14,7 +14,7 @@ export default function CreateReview() {
   const [comment, setComment] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<boolean>(false);
-  const router = useRouter();  // ใช้ useRouter เพื่อทำการเปลี่ยนเส้นทาง
+  const router = useRouter();  // Use useRouter to handle redirection
 
   useEffect(() => {
     async function fetchSpaces() {
@@ -62,11 +62,17 @@ export default function CreateReview() {
         setRating(0);
         setComment('');
         
-        // เปลี่ยนเส้นทางไปที่หน้า /space หลังจากส่งรีวิวสำเร็จ
+        // Redirect to the space page after submitting the review
         router.push('/space');
       }
-    } catch (error) {
-      setError('Failed to create review.');
+    } catch (error: any) {
+      // Capture the error message from the backend
+      if (error.response && error.response.data) {
+        const errorMessage = error.response.data.message || 'Error creating review';
+        setError(errorMessage);
+      } else {
+        setError('Error creating review');
+      }
       console.error('Error creating review:', error);
     }
   };
@@ -80,7 +86,7 @@ export default function CreateReview() {
         {success && <p className={styles.success}>Review submitted successfully!</p>}
 
         <div className={styles.inputGroup}>
-          <label htmlFor="space" className={styles.label}>Select a Workspace</label>
+          <label htmlFor="space" className={styles.label}>Select a Workspace:</label>
           <select
             id="space"
             className={styles.select}
@@ -96,8 +102,8 @@ export default function CreateReview() {
           </select>
         </div>
 
+        <label htmlFor="space" className={styles.label}>Rating:</label>
         <div className={styles.inputGroup}>
-          <label htmlFor="rating" className={styles.label}>Rating (1-5)</label>
           <Rating
             name="rating"
             value={rating}

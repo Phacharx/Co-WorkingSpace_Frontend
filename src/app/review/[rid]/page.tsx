@@ -2,22 +2,22 @@
 import { useState, useEffect } from "react";
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
-import { useSession } from "next-auth/react"; // Using useSession hook
-import Rating from '@mui/material/Rating';  // Import the Rating component from Material UI
+import { useSession } from "next-auth/react"; 
+import Rating from '@mui/material/Rating';  // Import Rating component from Material UI
 import styles from './page.module.css';
 
 export default function ReviewPage({ params }: { params: { rid: string } }) {
-    const { data: session } = useSession(); // Get session using the useSession hook
-    const [rating, setRating] = useState<number>(0); // Ensure rating defaults to 0
-    const [comment, setComment] = useState<string>(""); // Ensure comment defaults to empty string
+    const { data: session } = useSession(); 
+    const [rating, setRating] = useState<number>(0); 
+    const [comment, setComment] = useState<string>(""); 
     const [isDeleting, setIsDeleting] = useState<boolean>(false);
     const [isUpdating, setIsUpdating] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null); 
-    const [successMessage, setSuccessMessage] = useState<string | null>(null); // For success messages
+    const [successMessage, setSuccessMessage] = useState<string | null>(null); 
     const router = useRouter();
 
     useEffect(() => {
-        if (!session) return;  // Prevent fetching review if no session is found
+        if (!session) return; 
 
         const fetchReview = async () => {
             try {
@@ -26,8 +26,8 @@ export default function ReviewPage({ params }: { params: { rid: string } }) {
                         "Authorization": `Bearer ${session?.user?.token}`
                     }
                 });
-                setRating(response.data.rating || 0);  // Ensure fallback to 0 if rating is undefined
-                setComment(response.data.comment || ""); // Ensure fallback to empty string if comment is undefined
+                setRating(response.data.rating || 0); 
+                setComment(response.data.comment || ""); 
             } catch (error) {
                 console.error("Error fetching review:", error);
                 setError("Failed to fetch review details.");
@@ -41,7 +41,7 @@ export default function ReviewPage({ params }: { params: { rid: string } }) {
         if (isUpdating) return; 
         setIsUpdating(true);
         setError(null);
-        setSuccessMessage(null); // Reset success message
+        setSuccessMessage(null); 
 
         const updatedReview = { rating, comment };
         try {
@@ -70,7 +70,7 @@ export default function ReviewPage({ params }: { params: { rid: string } }) {
         if (isDeleting) return;
         setIsDeleting(true);
         setError(null);
-        setSuccessMessage(null); // Reset success message
+        setSuccessMessage(null); 
 
         try {
             const response = await axios.delete(`http://localhost:5003/api/v1/reviews/${params.rid}`, {
@@ -93,21 +93,21 @@ export default function ReviewPage({ params }: { params: { rid: string } }) {
         }
     };
 
-    if (!session) return <div>Loading...</div>; // Show loading while session is being fetched
+    if (!session) return <div>Loading...</div>; 
 
     return (
         <div className={styles.overlay}>
             <div className={styles.reviewPage}>
                 <h2 className={styles.heading}>Review Details</h2>
-                {error && <p className={styles.error}>{error}</p>} {/* Show error message */}
-                {successMessage && <p className={styles.success}>{successMessage}</p>} {/* Show success message */}
+                {error && <p className={styles.error}>{error}</p>} 
+                {successMessage && <p className={styles.success}>{successMessage}</p>} 
                 <div>
                     <label className={styles.label}>Rating:</label>
                     <Rating
                         name="review-rating"
                         value={rating}
-                        onChange={(e, newValue) => setRating(newValue || 0)} // Use the new value from the Rating component
-                        precision={0.5} // Allows half stars
+                        onChange={(e, newValue) => setRating(newValue || 0)} 
+                        precision={0.5} 
                     />
                 </div>
                 <div>
