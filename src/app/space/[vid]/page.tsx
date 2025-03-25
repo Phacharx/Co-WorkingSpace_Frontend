@@ -7,11 +7,10 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "../../api/auth/[...nextauth]/authOptions";
 import getUserProfile from "@/libs/getUserProfile";
 
-export default async function spaceDetailPage({params}:{params:{vid:string}}) {
-
+export default async function spaceDetailPage({ params }: { params: { vid: string } }) {
     const session = await getServerSession(authOptions);
     
-    // ตรวจสอบว่า session มีข้อมูลหรือไม่ ถ้าไม่มีให้แสดงข้อความ Please login
+    // Check if session is available
     if (!session || !session.user.token) {
         return (
             <div className={styles.overlay}>
@@ -35,7 +34,7 @@ export default async function spaceDetailPage({params}:{params:{vid:string}}) {
     }
 
     const handleEditReview = (reviewId: string) => {
-        // เพิ่มฟังก์ชันเพื่อแก้ไขรีวิว
+        // Handle editing a review
         console.log(`Editing review with ID: ${reviewId}`);
     };
 
@@ -43,20 +42,20 @@ export default async function spaceDetailPage({params}:{params:{vid:string}}) {
         <div className={styles.overlay}>
             <div className={styles.container}>
                 <Image
-                    src={workspace.data.picture} 
+                    src={workspace.picture} // Direct access to `picture`
                     alt="Welcome to Space"
                     width={500}
                     height={300}
                     className={styles.welcomeImage}
                 />
                 <div className={styles.Text}>
-                    <h2>{workspace.data.name}</h2>
-                    <h5>Address: {workspace.data.address}</h5>
-                    <h5>Telephone: {workspace.data.telephone}</h5>
-                    <h5>Open Time: {workspace.data.openTime}</h5>
-                    <h5>Close Time: {workspace.data.closeTime}</h5>
-                    <h5>Size: {workspace.data.size} m²</h5>
-                    <h5>Seats: {workspace.data.minSeats} - {workspace.data.maxSeats} people</h5>
+                    <h2>{workspace.name}</h2>  {/* Direct access to `name` */}
+                    <h5>Address: {workspace.address}</h5> {/* Direct access to `address` */}
+                    <h5>Telephone: {workspace.telephone}</h5> {/* Direct access to `telephone` */}
+                    <h5>Open Time: {workspace.openTime}</h5> {/* Direct access to `openTime` */}
+                    <h5>Close Time: {workspace.closeTime}</h5> {/* Direct access to `closeTime` */}
+                    <h5>Size: {workspace.size} m²</h5> {/* Direct access to `size` */}
+                    <h5>Seats: {workspace.minSeats} - {workspace.maxSeats} people</h5> {/* Direct access to `minSeats` and `maxSeats` */}
                     <a href={`${params.vid}/reservation`}>
                         <div className={styles.Button}>Book Now</div>
                     </a>
@@ -71,7 +70,7 @@ export default async function spaceDetailPage({params}:{params:{vid:string}}) {
                     <h1>Reviews</h1>
                     {reviews.length > 0 && (
                         <div className={styles.averageRating}>
-                            <h4>Average Rating: {workspace.data.averageRating.toFixed(1)} ({reviews.length} Review{reviews.length > 1 ? 's' : ''})</h4>
+                            <h4>Average Rating: {workspace.averageRating.toFixed(1)} ({reviews.length} Review{reviews.length > 1 ? 's' : ''})</h4> {/* Direct access to `averageRating` */}
                         </div>
                     )}
                 </div>
@@ -88,7 +87,7 @@ export default async function spaceDetailPage({params}:{params:{vid:string}}) {
                                 <p>Rating: {review.rating}</p>
                                 <p>{review.comment}</p>
                             </div>
-                            {/* เพิ่มเงื่อนไขเพื่อตรวจสอบว่ารีวิวเป็นของผู้ใช้ปัจจุบันหรือไม่ */}
+                            {/* Check if the review belongs to the current user */}
                             {Profile.data._id === review.user._id && (
                                 <a href={`/review/${review._id}`}>
                                     <div className={styles.editButton}>Edit Review</div>
