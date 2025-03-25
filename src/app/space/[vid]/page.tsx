@@ -1,32 +1,34 @@
 'use client'
 
-import React, { useEffect, useState } from 'react';
 import Image from "next/image";
 import getSpace from "@/libs/getSpace";
-import getReviews from "@/libs/getReviews";
-import { Space, Review } from "../../../../interface";
-import { useSession } from "next-auth/react";
 import styles from './page.module.css';
+import { Space, Review } from "../../../../interface";
+import getReviews from "@/libs/getReviews";
+import { useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
 import getUserProfile from "@/libs/getUserProfile";
 
 export default function SpaceDetailPage({ params }: { params: { vid: string } }) {
-  const { data: session } = useSession();
-  const [workspace, setWorkspace] = useState<Space | null>(null);
-  const [reviews, setReviews] = useState<Review[]>([]);
-  const [profile, setProfile] = useState<any>(null);
+  const { data: session } = useSession(); // ตรวจสอบ session บน client
+  const [workspace, setWorkspace] = useState<Space | null>(null); // เก็บข้อมูล workspace
+  const [reviews, setReviews] = useState<Review[]>([]); // เก็บข้อมูล reviews
+  const [profile, setProfile] = useState<any>(null); // เก็บข้อมูล profile
 
   useEffect(() => {
     const fetchData = async () => {
+      // ดึงข้อมูล workspace
+      const workspaceData = await getSpace(params.vid);
+      setWorkspace(workspaceData);
+
       if (session && session.user?.token) {
-        // Fetch user profile
+        // ดึงข้อมูล profile ถ้าผู้ใช้ล็อกอิน
         const profileData = await getUserProfile(session.user.token);
         setProfile(profileData);
       }
 
-      const workspaceData = await getSpace(params.vid);
-      setWorkspace(workspaceData);
-
       try {
+        // ดึงข้อมูลรีวิว
         const reviewsData = await getReviews(params.vid);
         setReviews(reviewsData);
       } catch (error) {
@@ -34,21 +36,12 @@ export default function SpaceDetailPage({ params }: { params: { vid: string } })
       }
     };
 
-    fetchData();
-  }, [session, params.vid]); // Fetch when session or vid changes
+    fetchData(); // เรียกใช้งานฟังก์ชัน fetchData เมื่อ component โหลด
 
-  if (!session || !session.user?.token) {
-    return (
-      <div className={styles.overlay}>
-        <div className={styles.container}>
-          <h2>Please log in to view the details</h2>
-        </div>
-      </div>
-    );
-  }
+  }, [session, params.vid]); // ใช้ session และ params.vid เป็น dependency
 
   if (!workspace) {
-    return <div>Loading...</div>; // Or a better loading indicator
+    return <div>Loading...</div>; // หาก workspace ยังไม่โหลดเสร็จแสดงข้อความ Loading...
   }
 
   return (
@@ -100,6 +93,7 @@ export default function SpaceDetailPage({ params }: { params: { vid: string } })
                 <p>Rating: {review.rating}</p>
                 <p>{review.comment}</p>
               </div>
+              {/* เช็คว่ารีวิวนี้เป็นของผู้ใช้ที่ล็อกอินหรือไม่ */}
               {profile?.data?._id === review.user._id && (
                 <a href={`/review/${review._id}`}>
                   <div className={styles.editButton}>Edit Review</div>
