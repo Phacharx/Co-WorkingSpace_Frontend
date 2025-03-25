@@ -16,7 +16,7 @@ const Register = () => {
 
     try {
       await userRegister(name, email, phone, password);
-      window.location.href = "/login";
+      window.location.href = "/signin";
     } catch (error) {
       setError("Registration failed. Please try again.");
       console.log(error);
