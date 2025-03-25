@@ -21,7 +21,7 @@ export default function ReviewPage({ params }: { params: { rid: string } }) {
 
         const fetchReview = async () => {
             try {
-                const response = await axios.get(`http://localhost:5003/api/v1/reviews/${params.rid}`, {
+                const response = await axios.get(`${process.env.BACKEND_URL}/api/v1/reviews/${params.rid}`, {
                     headers: {
                         "Authorization": `Bearer ${session?.user?.token}`
                     }
@@ -45,7 +45,7 @@ export default function ReviewPage({ params }: { params: { rid: string } }) {
 
         const updatedReview = { rating, comment };
         try {
-            const response = await axios.put(`http://localhost:5003/api/v1/reviews/${params.rid}`, updatedReview, {
+            const response = await axios.put(`${process.env.BACKEND_URL}/api/v1/reviews/${params.rid}`, updatedReview, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${session?.user?.token}`
@@ -73,7 +73,7 @@ export default function ReviewPage({ params }: { params: { rid: string } }) {
         setSuccessMessage(null); 
 
         try {
-            const response = await axios.delete(`http://localhost:5003/api/v1/reviews/${params.rid}`, {
+            const response = await axios.delete(`${process.env.BACKEND_URL}/api/v1/reviews/${params.rid}`, {
                 headers: {
                     'Authorization': `Bearer ${session?.user?.token}`
                 }

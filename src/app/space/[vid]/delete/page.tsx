@@ -19,7 +19,7 @@ const Delete = ({ params }: { params: { vid: string } }) => {
     setError(null);
 
     try {
-      const response = await axios.delete(`http://localhost:5003/api/v1/spaces/${params.vid}`, { // Changed endpoint to match Postman
+      const response = await axios.delete(`${process.env.BACKEND_URL}/api/v1/spaces/${params.vid}`, { // Changed endpoint to match Postman
         headers: {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${session.user.token}`,

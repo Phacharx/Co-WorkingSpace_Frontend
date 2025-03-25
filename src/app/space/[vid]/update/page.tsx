@@ -22,7 +22,7 @@ export default function UpdateSpace({ params }: { params: { vid: string } }) {
   useEffect(() => {
     const fetchSpaceDetails = async () => {
       try {
-        const response = await axios.get(`http://localhost:5003/api/v1/spaces/${params.vid}`, {
+        const response = await axios.get(`${process.env.BACKEND_URL}/api/v1/spaces/${params.vid}`, {
           headers: {
             "Authorization": `Bearer ${session?.user?.token}`,
           },
@@ -77,7 +77,7 @@ export default function UpdateSpace({ params }: { params: { vid: string } }) {
     };
 
     try {
-      const response = await axios.put(`http://localhost:5003/api/v1/spaces/${vid}`, payload, {
+      const response = await axios.put(`${process.env.BACKEND_URL}/api/v1/spaces/${vid}`, payload, {
         headers: {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${session.user.token}`,

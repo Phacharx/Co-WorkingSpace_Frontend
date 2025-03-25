@@ -7,7 +7,7 @@ export default async function getReservations() {
     if (!session || !session.user.token) return null;
 
     try {
-        const response = await axios.get('http://localhost:5003/api/v1/reservations', {
+        const response = await axios.get(`${process.env.BACKEND_URL}/api/v1/reservations`, {
             headers: {
                 'Authorization': `Bearer ${session.user.token}`
             }

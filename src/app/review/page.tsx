@@ -19,7 +19,7 @@ export default function CreateReview() {
   useEffect(() => {
     async function fetchSpaces() {
       try {
-        const response = await axios.get('http://localhost:5003/api/v1/spaces');
+        const response = await axios.get(`${process.env.BACKEND_URL}/api/v1/spaces`);
         if (response.status === 200) {
           setSpaces(response.data.data);
         }
@@ -48,7 +48,7 @@ export default function CreateReview() {
     };
 
     try {
-      const response = await axios.post(`http://localhost:5003/api/v1/spaces/${selectedSpace}/reviews`, payload, {
+      const response = await axios.post(`${process.env.BACKEND_URL}/api/v1/spaces/${selectedSpace}/reviews`, payload, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${session.user.token}`,

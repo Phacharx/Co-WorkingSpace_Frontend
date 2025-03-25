@@ -43,7 +43,7 @@ export default function CreateReservation() {
     };
 
     try {
-      const response = await axios.post(`http://localhost:5003/api/v1/spaces/${selectedWorkspace}/reservations`, payload, {
+      const response = await axios.post(`${process.env.BACKEND_URL}/api/v1/spaces/${selectedWorkspace}/reservations`, payload, {
         headers: {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${session.user.token}`,

@@ -10,16 +10,28 @@ import getUserProfile from "@/libs/getUserProfile";
 export default async function spaceDetailPage({params}:{params:{vid:string}}) {
 
     const session = await getServerSession(authOptions);
-    if (!session || !session.user.token) return null;
+    
+    // ตรวจสอบว่า session มีข้อมูลหรือไม่ ถ้าไม่มีให้แสดงข้อความ Please login
+    if (!session || !session.user.token) {
+        return (
+            <div className={styles.overlay}>
+                <div className={styles.container}>
+                    <h2>Please log in to view the details</h2>
+                </div>
+            </div>
+        );
+    }
+
     const Profile = await getUserProfile(session.user.token);
     console.log(Profile.data._id);
+
     const workspace: Space = await getSpace(params.vid);
     let reviews: Review[] = [];
 
     try {
         reviews = await getReviews(params.vid);
     } catch (error) {
-        // console.error('Error fetching reviews:', error);
+        console.error('Error fetching reviews:', error);
     }
 
     const handleEditReview = (reviewId: string) => {

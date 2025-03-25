@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export default async function getSpaces() {
   try {
-    const response = await axios.get('http://localhost:5003/api/v1/spaces', {
+    const response = await axios.get(`${process.env.BACKEND_URL}/api/v1/spaces`, {
       headers: {
         "Content-Type": "application/json",
       },

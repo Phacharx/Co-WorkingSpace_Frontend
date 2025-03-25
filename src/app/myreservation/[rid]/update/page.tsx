@@ -50,7 +50,7 @@ export default function UpdateReservation({ params }: { params: { rid: string } 
     };
 
     try {
-      const response = await axios.put(`http://localhost:5003/api/v1/reservations/${reservationId}`, payload, {
+      const response = await axios.put(`${process.env.BACKEND_URL}/api/v1/reservations/${reservationId}`, payload, {
         headers: {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${session.user.token}`,

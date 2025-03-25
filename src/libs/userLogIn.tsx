@@ -2,7 +2,7 @@ import axios from "axios";
 
 export default async function userLogin(userEmail: string, userPassword: string) {
     try {
-        const response = await axios.post("http://localhost:5003/api/v1/auth/login", {
+        const response = await axios.post(`${process.env.BACKEND_URL}/api/v1/auth/login`, {
             email: userEmail,
             password: userPassword
         }, {

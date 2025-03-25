@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const userRegister = async (name: string, email: string, phone: string, password: string) => {
     try {
-        const response = await axios.post('http://localhost:5003/api/v1/auth/register', {
+        const response = await axios.post(`${process.env.BACKEND_URL}/api/v1/auth/register`, {
             name,
             email,
             telephone: phone,

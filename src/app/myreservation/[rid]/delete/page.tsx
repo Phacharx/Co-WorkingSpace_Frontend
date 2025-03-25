@@ -19,7 +19,7 @@ const Delete = ({ params }: { params: { rid: string } }) => {
     setError(null);
 
     try {
-      const response = await axios.delete(`http://localhost:5003/api/v1/reservations/${params.rid}`, {
+      const response = await axios.delete(`${process.env.BACKEND_URL}/api/v1/reservations/${params.rid}`, {
         headers: {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${session.user.token}`, 

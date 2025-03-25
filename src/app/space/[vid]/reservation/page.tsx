@@ -29,7 +29,7 @@ export default function CreateReservation({ params }: { params: { vid: string } 
     };
 
     try {
-      const response = await axios.post(`http://localhost:5003/api/v1/spaces/${params.vid}/reservations`, payload, {
+      const response = await axios.post(`${process.env.BACKEND_URL}/api/v1/spaces/${params.vid}/reservations`, payload, {
         headers: {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${session.user.token}`,
