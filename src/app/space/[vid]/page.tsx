@@ -12,35 +12,39 @@ export default function SpaceDetailPage({ params }: { params: { vid: string } })
   const { data: session } = useSession(); // Check session on the client side
   const [workspace, setWorkspace] = useState<Space | null>(null);
   const [profile, setProfile] = useState<any>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(true); // กำหนดสถานะการโหลด
+  const [isLoading, setIsLoading] = useState<boolean>(true); // Loading state
 
   useEffect(() => {
     const fetchSpaceData = async () => {
       try {
-        setIsLoading(true); // ตั้งค่าเป็น loading ก่อนเริ่มการดึงข้อมูล
-        const spaceData = await getSpace(params.vid); // Fetch workspace data (รวมถึงรีวิว)
-        
-        setWorkspace(spaceData.data);
+        setIsLoading(true);
 
-        if (session && session.user?.token) {
-          const profileData = await getUserProfile(session.user.token);
-          setProfile(profileData);
-        }
+        const [spaceData, profileData] = await Promise.all([
+          getSpace(params.vid),
+          session && session.user?.token ? getUserProfile(session.user.token) : Promise.resolve(null),
+        ]);
+
+        setWorkspace(spaceData.data);
+        setProfile(profileData?.data || null);
+
+        // ✅ Log profile ที่ได้จาก API
+        console.log("✅ Profile fetched from API:", profileData?.data || null);
+
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error('❌ Error fetching data:', error);
       } finally {
-        setIsLoading(false); // ตั้งค่าเป็น false เมื่อข้อมูลเสร็จสิ้นการดึง
+        setIsLoading(false);
       }
     };
 
     fetchSpaceData();
-  }, [session, params.vid]); // Fetch when session or vid changes
+  }, [session, params.vid]);
 
-  // เพิ่ม log เพื่อดูว่า workspace และ reviews ถูกตั้งค่าแล้ว
-  console.log("Workspace fetched:", workspace);
+  // ✅ Log profile ปัจจุบันใน state ทุกครั้งที่ component re-render
+  console.log("🌀 Current profile state:", profile);
 
-  if (isLoading) {
-    return <div>Loading...</div>; // หากกำลังโหลดอยู่แสดงข้อความ Loading
+  if (isLoading || !workspace || !profile) {
+    return <div>Loading...</div>;
   }
 
   return (
@@ -57,13 +61,13 @@ export default function SpaceDetailPage({ params }: { params: { vid: string } })
           />
         )}
         <div className={styles.Text}>
-          <h2>{workspace?.name}</h2>
-          <h5>Address: {workspace?.address}</h5>
-          <h5>Telephone: {workspace?.telephone}</h5>
-          <h5>Open Time: {workspace?.openTime}</h5>
-          <h5>Close Time: {workspace?.closeTime}</h5>
-          <h5>Size: {workspace?.size} m²</h5>
-          <h5>Seats: {workspace?.minSeats} - {workspace?.maxSeats} people</h5>
+          <h2>{workspace.name}</h2>
+          <h5>Address: {workspace.address}</h5>
+          <h5>Telephone: {workspace.telephone}</h5>
+          <h5>Open Time: {workspace.openTime}</h5>
+          <h5>Close Time: {workspace.closeTime}</h5>
+          <h5>Size: {workspace.size} m²</h5>
+          <h5>Seats: {workspace.minSeats} - {workspace.maxSeats} people</h5>
           <a href={`${params.vid}/reservation`}>
             <div className={styles.Button}>Book Now</div>
           </a>
@@ -73,35 +77,44 @@ export default function SpaceDetailPage({ params }: { params: { vid: string } })
       <div className={styles.containerHr}>
         <hr className={styles.divider} />
       </div>
+
       <div className={styles.containerReviews}>
         <div className={styles.HeaderText}>
           <h1>Reviews</h1>
-          {workspace?.reviews && workspace.reviews.length > 0 && (
+          {workspace.reviews.length > 0 && (
             <div className={styles.averageRating}>
-              <h4>Average Rating: {workspace.averageRating} ({workspace.reviews.length} Review{workspace.reviews.length > 1 ? 's' : ''})</h4>
+              <h4>
+                Average Rating: {workspace.averageRating} ({workspace.reviews.length} Review{workspace.reviews.length > 1 ? 's' : ''})
+              </h4>
             </div>
           )}
         </div>
-        {workspace?.reviews.length === 0 ? (
+
+        {workspace.reviews.length === 0 ? (
           <p>No reviews yet.</p>
         ) : (
-          workspace?.reviews?.map((review) => (
-            <div key={review._id} className={styles.reviewCard}>
-              {/* <div className={styles.reviewHeaderLeft}>
-                <h3>{review.user.name}</h3>
-              </div> */}
-              {/* <hr className={styles.separator} /> */}
-              <div className={styles.reviewContent}>
-                <h3>Rating: {review.rating}</h3>
-                <p>{review.comment}</p>
+          workspace.reviews.map((review) => {
+            // ✅ Log การเปรียบเทียบ user ID
+            console.log("👤 Comparing:", {
+              profileId: profile._id,
+              reviewUserId: review.user,
+              matched: profile._id === review.user
+            });
+
+            return (
+              <div key={review._id} className={styles.reviewCard}>
+                <div className={styles.reviewContent}>
+                  <h3>Rating: {review.rating}</h3>
+                  <p>{review.comment}</p>
+                </div>
+                {profile && profile._id === review.user && (
+                  <a href={`/review/${review._id}`}>
+                    <div className={styles.editButton}>Edit Review</div>
+                  </a>
+                )}
               </div>
-              {session && profile?.data?._id === review.user._id && (
-                <a href={`/review/${review._id}`}>
-                  <div className={styles.editButton}>Edit Review</div>
-                </a>
-              )}
-            </div>
-          ))
+            );
+          })
         )}
       </div>
     </div>
