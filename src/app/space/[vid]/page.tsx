@@ -70,7 +70,7 @@ export default async function spaceDetailPage({ params }: { params: { vid: strin
                     <h1>Reviews</h1>
                     {reviews.length > 0 && (
                         <div className={styles.averageRating}>
-                            <h4>Average Rating: {workspace.averageRating.toFixed(1)} ({reviews.length} Review{reviews.length > 1 ? 's' : ''})</h4> {/* Direct access to `averageRating` */}
+                            <h4>Average Rating: {workspace.averageRating} ({reviews.length} Review{reviews.length > 1 ? 's' : ''})</h4> {/* Direct access to `averageRating` */}
                         </div>
                     )}
                 </div>
