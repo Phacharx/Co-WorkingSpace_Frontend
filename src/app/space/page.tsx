@@ -32,7 +32,7 @@ export default function Page() {
     <div className={styles.container}>
       <div className={styles.welcomeSection}>
         <Image
-          src="/Image/space.jpg"
+          src="/Image/Space.jpg"
           alt="Welcome to Space"
           width={1200}
           height={450}
@@ -54,12 +54,13 @@ export default function Page() {
           <div key={workspace.id} className={styles.card}>
             <Link href={`/space/${workspace.id}`}>
               <div>
-                <Image
+                <Image 
                   src={workspace.picture}
                   alt={workspace.name}
                   width={500}
                   height={300}
                   className={styles.cardImg}
+                  priority
                 />
                 <div className={styles.cardContent}>
                   <div className={styles.cardTitle}>{workspace.name}</div>
