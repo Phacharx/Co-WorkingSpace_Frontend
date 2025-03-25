@@ -7,7 +7,7 @@ export default async function getSpace(id: string) {
                 "Content-Type": "application/json",
             },
         });
-
+        console.log('Space fetched:', response.data);
         return response.data;
     } catch (error) {
         throw new Error('Failed to fetch space');
